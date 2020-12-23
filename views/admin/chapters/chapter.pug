@@ -1,0 +1,46 @@
+include ../../layout/admin_layout.pug 
+	block content 
+		.container-fluid.container-admin
+			.row
+				.col-lg-2.col-xl-2#navbar-1
+					include ../../components/admin_navbar.pug
+				.col-lg-10.col-xl-10#navbar-11
+					.box-chapter
+						.head
+							a(href="/admin/post").back 
+								i.fas.fa-long-arrow-alt-left
+								|Back 
+							a(href=`/admin/chapter/${id}/new`).create-chapter Tạo chương
+						.body
+							table
+								thead
+									tr
+										td Chương
+									tr
+										td
+											input(type="text" id="" name="filter-name" placeholder="Lọc truyện")
+								tbody
+									each value, index in data 
+										tr.item
+											td= `Chương ${index + 1}: ${value.name}`
+											td 
+												a(href=`/admin/chapter/${value._id}/edit`).mr-4.text-secondary
+													i.fas.fa-pen.pr-1
+													| Sửa
+												a(href=`/admin/chapter/${value._id}/del`).text-danger
+													i.fas.fa-trash.pr-1
+													| Xóa
+		include ../../layout/script.pug
+		script.
+			var input = document.querySelector("[name='filter-name']");
+			var item = document.querySelectorAll('.item');
+			input.addEventListener('keyup', function(e) {
+				let name = e.target.value;
+				item.forEach((item) => {
+					if(item.children[0].innerHTML.toLowerCase().indexOf(name) !== -1) {
+						item.style.display = '';
+					}else {
+						item.style.display = 'none'
+					}
+				})
+			})

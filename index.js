@@ -71,7 +71,8 @@ app.use('/admin', auth_userId.auth_userId, admin_router);
 app.use(user_router);
 
 // listen
-app.listen('3000');
+const port = process.env.PORT || 5000
+app.listen(port);
 
 // connect database
 mongoose.connect(process.env.URI_MONGODB, {
